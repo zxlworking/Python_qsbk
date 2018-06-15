@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     form = cgi.FieldStorage()
     page = form.getvalue("page")
-    page = 1
+    # page = 1
     if page is None:
         result["code"] = -1
         result["desc"] = "param error"
