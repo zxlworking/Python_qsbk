@@ -6,7 +6,7 @@ import re
 
 page = 1
 url = "http://www.qiushibaike.com/hot/page/%s" % page
-user_agent = "'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)"
+user_agent = "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)"
 headers = {"User-Agent":user_agent}
 try:
     request = urllib2.Request(url,headers=headers)
@@ -34,3 +34,9 @@ except urllib2.URLError, e:
         print e.code
     if hasattr(e,"reason"):
         print e.reason
+
+
+src = """
+<img src="//pic.qiushibaike.com/system/pictures/12055/120552933/medium/app120552933.jpeg" alt="糗事#120552933" class="illustration" width="100%" height="auto">
+"""
+print re.findall("img src=\"(.*?)\" alt=\"糗事#120552933\" class=\"illustration\" width=\"100%\" height=\"auto\">", src)
