@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     form = cgi.FieldStorage()
     page = form.getvalue("page")
-    # page = 1
+    page = 1
     if page is None:
         result["code"] = -1
         result["desc"] = "param error"
@@ -39,29 +39,31 @@ if __name__ == "__main__":
 
                 mQsbkParseElement = {}
 
-                mQsbkParseElement["author_head_img"] = "http:" + qsbk_element[0]
-                mQsbkParseElement["author_name"] = qsbk_element[1]
 
-                qsbk_anonymity = mParseUtil.parse_qsbk_anonymity(qsbk_element[2])
+                mQsbkParseElement["author_id"] = re.findall("\d+", qsbk_element[0])[0]
+                mQsbkParseElement["author_head_img"] = "http:" + qsbk_element[1]
+                mQsbkParseElement["author_name"] = qsbk_element[2]
+
+                qsbk_anonymity = mParseUtil.parse_qsbk_anonymity(qsbk_element[3])
                 if qsbk_anonymity:
                     mQsbkParseElement["is_anonymity"] = 1
                     mQsbkParseElement["author_sex"] = SEX_MAN
                     mQsbkParseElement["author_age"] = 0
                 else:
                     mQsbkParseElement["is_anonymity"] = 0
-                    author_sex_age = mParseUtil.parse_qsbk_author_sex_age(qsbk_element[2])
+                    author_sex_age = mParseUtil.parse_qsbk_author_sex_age(qsbk_element[3])
                     if author_sex_age[0][0] == "articleGender manIcon":
                         mQsbkParseElement["author_sex"] = SEX_MAN
                     else:
                         mQsbkParseElement["author_sex"] = SEX_FEMALE
                     mQsbkParseElement["author_age"] = int(author_sex_age[0][1])
 
-                qsbk_content = qsbk_element[3].strip("\n")
+                qsbk_content = qsbk_element[4].strip("\n")
                 qsbk_content = re.sub("<br/>", "\n", qsbk_content)
                 mQsbkParseElement["content"] = qsbk_content
 
                 # print qsbk_element[4]
-                qsbk_thumb = mParseUtil.parse_qsbk_thumb(qsbk_element[4])
+                qsbk_thumb = mParseUtil.parse_qsbk_thumb(qsbk_element[5])
                 if qsbk_thumb:
                     mQsbkParseElement["has_thumb"] = 1
                     mQsbkParseElement["thumb"] = "http:" + qsbk_thumb[0]
@@ -69,7 +71,7 @@ if __name__ == "__main__":
                     mQsbkParseElement["has_thumb"] = 0
                     mQsbkParseElement["thumb"] = ""
 
-                qsbk_vote_comment = mParseUtil.parse_qsbk_vote_comment(qsbk_element[5])
+                qsbk_vote_comment = mParseUtil.parse_qsbk_vote_comment(qsbk_element[6])
                 mQsbkParseElement["vote_number"] = int(qsbk_vote_comment[0][0])
                 mQsbkParseElement["comment_number"] = int(qsbk_vote_comment[0][1])
 
