@@ -48,7 +48,6 @@ if __name__ == "__main__":
                 user_comment_element["user_id"] = parse_qsbk_detail_comment_element[0]
                 user_comment_element["user_head_img"] = "http:" + parse_qsbk_detail_comment_element[1]
                 user_comment_element["user_name"] = parse_qsbk_detail_comment_element[2]
-                print parse_qsbk_detail_comment_element[3]
                 if "manIcon" in parse_qsbk_detail_comment_element[3]:
                     user_comment_element["user_sex"] = SEX_MAN
                 else:
